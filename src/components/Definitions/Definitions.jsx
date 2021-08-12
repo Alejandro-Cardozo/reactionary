@@ -14,7 +14,7 @@ const Definitions = ({ word, category, meanings }) => {
           mean.meanings.map((item) =>
             item.definitions.map((def) => (
               <div
-                className='singleMean'
+                className={classes.singleMean}
                 style={{ backgroundColor: 'white', color: 'black' }}
               >
                 <b>{def.definition}</b>
