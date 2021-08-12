@@ -10,6 +10,7 @@ import classes from './App.module.css';
 function App() {
   const [meanings, setMeanings] = useState([]);
   const [word, setWord] = useState('');
+  const [category, setCategory] = useState('en');
 
   const dictionaryApi = async () => {
     try {
@@ -31,7 +32,12 @@ function App() {
   return (
     <div className={classes.app}>
       <Container className={classes.container} maxWidth='md'>
-        <Header />
+        <Header
+          category={category}
+          setCategory={setCategory}
+          word={word}
+          setWord={setWord}
+        />
       </Container>
     </div>
   );
