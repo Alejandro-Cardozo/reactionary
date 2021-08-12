@@ -12,22 +12,25 @@ function App() {
   const [word, setWord] = useState('');
   const [category, setCategory] = useState('en');
 
-  const dictionaryApi = async () => {
-    try {
-      const data = await axios.get(
-        ' https://api.dictionaryapi.dev/api/v2/entries/en/bull'
-      );
-      setMeanings(data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   console.log(meanings);
 
+  // TODO: modify the code to avoid sending requests on every key stroke
   useEffect(() => {
+    const dictionaryApi = async () => {
+      try {
+        if (word.length > 0) {
+          const data = await axios.get(
+            `https://api.dictionaryapi.dev/api/v2/entries/${category}/${word}`
+          );
+          setMeanings(data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     dictionaryApi();
-  }, []);
+  }, [category, word]);
 
   return (
     <div className={classes.app}>

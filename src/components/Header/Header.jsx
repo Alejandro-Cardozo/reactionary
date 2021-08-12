@@ -19,6 +19,12 @@ const Header = ({ category, setCategory, word, setWord }) => {
       type: 'dark',
     },
   });
+
+  const selectLanguageHandler = (language) => {
+    setCategory(language);
+    setWord("");
+  }
+
   return (
     <div className={classes.header}>
       <span className={classes.title}>{word ? word : "Dick-tionary"}</span>
@@ -32,8 +38,9 @@ const Header = ({ category, setCategory, word, setWord }) => {
           />
           <TextField
             select
+            className={classes.select}
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => selectLanguageHandler(e.target.value)}
             label='Language'
           >
             {categories.map((option) => (
