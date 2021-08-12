@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { Container } from '@material-ui/core';
 import Header from './components/Header/Header';
+import Definitions from './components/Definitions/Definitions';
 
 import classes from './App.module.css';
 
@@ -11,8 +12,6 @@ function App() {
   const [meanings, setMeanings] = useState([]);
   const [word, setWord] = useState('');
   const [category, setCategory] = useState('en');
-
-  console.log(meanings);
 
   // TODO: modify the code to avoid sending requests on every key stroke
   useEffect(() => {
@@ -41,6 +40,9 @@ function App() {
           word={word}
           setWord={setWord}
         />
+        {meanings && (
+          <Definitions word={word} meanings={meanings} category={category} />
+        )}
       </Container>
     </div>
   );
