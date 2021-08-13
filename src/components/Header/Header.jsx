@@ -10,24 +10,24 @@ import {
 import categories from '../../data/category';
 import classes from './Header.module.css';
 
-const Header = ({ category, setCategory, word, setWord }) => {
+const Header = ({ category, setCategory, word, setWord, lightMode }) => {
   const darkTheme = createTheme({
     palette: {
       primary: {
-        main: '#fff',
+        main: lightMode ? '#fff' : '#000',
       },
-      type: 'dark',
+      type: lightMode ? 'light' : 'dark',
     },
   });
 
   const selectLanguageHandler = (language) => {
     setCategory(language);
-    setWord("");
-  }
+    setWord('');
+  };
 
   return (
     <div className={classes.header}>
-      <span className={classes.title}>{word ? word : "Dick-tionary"}</span>
+      <span className={classes.title}>{word ? word : 'Dick-tionary'}</span>
       <div className={classes.inputs}>
         <ThemeProvider theme={darkTheme}>
           <TextField
