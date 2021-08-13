@@ -14,6 +14,7 @@ function App() {
   const [word, setWord] = useState('');
   const [category, setCategory] = useState('en');
   const [lightMode, setLightMode] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const DarkMode = withStyles({
     switchBase: {
@@ -30,7 +31,9 @@ function App() {
   })(Switch);
   
   useEffect(() => {
+    setIsLoading(true)
     const dictionaryApi = async () => {
+      
       try {
         if (word.length > 0) {
           const data = await axios.get(
@@ -43,8 +46,11 @@ function App() {
         console.log(error);
       }
     };
+    
     const timer = setTimeout(() => {
       dictionaryApi();
+
+      setIsLoading(false)
     }, 1000);
     return () => {
       clearTimeout(timer);
@@ -96,6 +102,7 @@ function App() {
             meanings={meanings}
             category={category}
             lightMode={lightMode}
+            isLoading={isLoading}
           />
         )}
       </Container>

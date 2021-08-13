@@ -1,9 +1,9 @@
 import React from 'react';
+import Spinner from '../MUI/Spinner';
 
 import classes from './Definitions.module.css';
 
-const Definitions = ({ word, category, meanings, lightMode }) => {
-  console.log(meanings);
+const Definitions = ({ word, category, meanings, lightMode, isLoading }) => {
   return (
     <div className={classes.meanings}>
       {meanings[0] && word && category === 'en' && (
@@ -19,16 +19,16 @@ const Definitions = ({ word, category, meanings, lightMode }) => {
         <span className={classes.subtitle}>
           Start by typing a word in the search bar
         </span>
-      ) : !meanings ? (
-        <span className={classes.subtitle}>
-          No results
-        </span>
+      ) : isLoading ? (
+        <Spinner lightMode={lightMode} />
+      ) : meanings.length === 0 ? (
+        <span className={classes.subtitle}>No results</span>
       ) : (
         meanings.map((mean) =>
           mean.meanings.map((item) =>
             item.definitions.map((def) => (
               <div
-                key={`${word}-${def.definition.substr(0, 7)} `}
+                key={Math.random() * 1000}
                 className={classes.singleMean}
                 style={{
                   backgroundColor: lightMode ? '#282c34' : 'white',
