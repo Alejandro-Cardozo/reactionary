@@ -28,8 +28,7 @@ function App() {
     checked: {},
     track: {},
   })(Switch);
-
-  // TODO: modify the code to avoid sending requests on every key stroke
+  
   useEffect(() => {
     const dictionaryApi = async () => {
       try {
@@ -40,11 +39,16 @@ function App() {
           setMeanings(data.data);
         }
       } catch (error) {
+        setMeanings([]);
         console.log(error);
       }
     };
-
-    dictionaryApi();
+    const timer = setTimeout(() => {
+      dictionaryApi();
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [category, word]);
 
   return (
