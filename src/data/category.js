@@ -1,7 +1,6 @@
 const categories = [
   { value: "English", label: "en" },
   { value: "Spanish", label: "es" },
-  { value: "Brazilian Portuguese", label: "pt-BR" },
   { value: "Italian", label: "it" },
   { value: "French", label: "fr" },
   { value: "German", label: "de" },

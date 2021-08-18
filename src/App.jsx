@@ -43,7 +43,6 @@ function App() {
         }
       } catch (error) {
         setMeanings([]);
-        console.log(error);
       }
     };
     

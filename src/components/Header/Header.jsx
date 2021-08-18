@@ -14,7 +14,7 @@ const Header = ({ category, setCategory, word, setWord, lightMode }) => {
   const darkTheme = createTheme({
     palette: {
       primary: {
-        main: lightMode ? '#fff' : '#000',
+        main: lightMode ? '#000' : '#fff',
       },
       type: lightMode ? 'light' : 'dark',
     },
@@ -27,7 +27,7 @@ const Header = ({ category, setCategory, word, setWord, lightMode }) => {
 
   return (
     <div className={classes.header}>
-      <span className={classes.title}>{word ? word : 'Dick-tionary'}</span>
+      <span className={classes.title}>{word ? word : 'React-ionary'}</span>
       <div className={classes.inputs}>
         <ThemeProvider theme={darkTheme}>
           <TextField

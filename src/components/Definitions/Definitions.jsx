@@ -1,9 +1,14 @@
 import React from 'react';
 import Spinner from '../MUI/Spinner';
 
+import { subtitles } from '../../data/subtitles';
+
 import classes from './Definitions.module.css';
 
 const Definitions = ({ word, category, meanings, lightMode, isLoading }) => {
+
+  const textHelper = subtitles(category);
+
   return (
     <div className={classes.meanings}>
       {meanings[0] && word && category === 'en' && (
@@ -16,13 +21,13 @@ const Definitions = ({ word, category, meanings, lightMode, isLoading }) => {
         </audio>
       )}
       {word === '' ? (
-        <span className={classes.subtitle}>
-          Start by typing a word in the search bar
+        <span className={category === 'ar' ? classes.arab : classes.subtitle}>
+          {textHelper.subtitle}
         </span>
       ) : isLoading ? (
         <Spinner lightMode={lightMode} />
       ) : meanings.length === 0 ? (
-        <span className={classes.subtitle}>No results</span>
+        <span className={category === 'ar' ? classes.arab : classes.subtitle}>{textHelper.notFound}</span>
       ) : (
         meanings.map((mean) =>
           mean.meanings.map((item) =>
