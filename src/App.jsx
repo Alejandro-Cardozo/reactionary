@@ -29,27 +29,37 @@ function App() {
     checked: {},
     track: {},
   })(Switch);
-  
+
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const dictionaryApi = async () => {
-      
+      const options = {
+        method: 'GET',
+        url: 'https://lexicala1.p.rapidapi.com/search-entries',
+        params: { text: word },
+        headers: {
+          'X-RapidAPI-Key':
+            process.env.REACT_APP_RAPID_API_KEY,
+          'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST
+        },
+      };
       try {
         if (word.length > 0) {
-          const data = await axios.get(
-            `https://api.dictionaryapi.dev/api/v2/entries/${category}/${word}`
+          const data = await axios.request(options);
+          // console.log(data.data.results.filter((el) => el.language === category));
+          setMeanings(
+            data.data.results.filter((el) => el.language === category)
           );
-          setMeanings(data.data);
         }
       } catch (error) {
         setMeanings([]);
       }
     };
-    
+
     const timer = setTimeout(() => {
       dictionaryApi();
 
-      setIsLoading(false)
+      setIsLoading(false);
     }, 1000);
     return () => {
       clearTimeout(timer);
