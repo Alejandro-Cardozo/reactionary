@@ -11,6 +11,7 @@ import classes from './App.module.css';
 
 function App() {
   const [meanings, setMeanings] = useState([]);
+  const [headwordObj, setHeadwordObj] = useState({});
   const [word, setWord] = useState('');
   const [category, setCategory] = useState('en');
   const [lightMode, setLightMode] = useState(false);
@@ -38,21 +39,34 @@ function App() {
         url: 'https://lexicala1.p.rapidapi.com/search-entries',
         params: { text: word },
         headers: {
-          'X-RapidAPI-Key':
-            process.env.REACT_APP_RAPID_API_KEY,
-          'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST
+          'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+          'X-RapidAPI-Host': process.env.REACT_APP_RAPID_API_HOST,
         },
       };
       try {
         if (word.length > 0) {
           const data = await axios.request(options);
-          // console.log(data.data.results.filter((el) => el.language === category));
-          setMeanings(
-            data.data.results.filter((el) => el.language === category)
-          );
+          const { senses, headword } = data.data.results.filter(
+            (el) => el.language === category
+          )[0];
+          console.log(senses);
+          console.log(headword);
+          const definitions = senses.filter((el) => el.definition);
+          const allMeanings =
+            senses.filter((el) => el.compositional_phrases).length === 0
+              ? definitions
+              : definitions.concat(
+                  senses.filter((el) => el.compositional_phrases)[0]
+                    .compositional_phrases[0]
+                );
+          console.log(allMeanings);
+          setMeanings(allMeanings);
+          setHeadwordObj(headword);
         }
       } catch (error) {
+        console.log(error.message);
         setMeanings([]);
+        setHeadwordObj({});
       }
     };
 
@@ -109,6 +123,7 @@ function App() {
           <Definitions
             word={word}
             meanings={meanings}
+            headword={headwordObj}
             category={category}
             lightMode={lightMode}
             isLoading={isLoading}
